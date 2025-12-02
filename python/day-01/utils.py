@@ -22,9 +22,22 @@ def rotate(current: int, delta: int, dial_size: int = 100) -> int:
             dial is rotated above this number, the dial position
             resets to zero.
     """
-    remaining =  current + delta
-    while remaining < 0:
-        remaining += dial_size
-    while remaining >= dial_size:
-        remaining -= dial_size
-    return remaining
+    # Calculate full turns of the dial
+    pass_zero = abs(int(float(delta) / dial_size))
+    # Match the sign of the delta so modulo works as expected
+    divisor = -1 * dial_size if delta < 0 else dial_size
+    delta_remainder = delta % divisor
+
+    # Deal with the remaining (non-full) rotation
+    new_pos = current + delta_remainder
+    if new_pos < 0:
+        new_pos += dial_size
+        # Don't double count a pass if we started at zero
+        if current != 0:
+            pass_zero += 1
+    elif new_pos > dial_size:
+        new_pos -= dial_size
+        pass_zero += 1
+    elif new_pos == dial_size:
+        new_pos = 0
+    return new_pos, pass_zero
