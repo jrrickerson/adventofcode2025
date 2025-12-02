@@ -12,9 +12,10 @@ def part_1(input_data):
     zero_count = 0
     deltas = [utils.interpret_rotate(cmd) for cmd in input_data if cmd]
     current = START_POS
+    #print("START PART 1")
     for delta in deltas:
-        print(f"Current pos: {current}")
-        current = utils.rotate(current, delta)
+        #print(f"Current pos: {current}")
+        current, _ = utils.rotate(current, delta)
         if current == 0:
             zero_count += 1
 
@@ -22,7 +23,21 @@ def part_1(input_data):
 
 
 def part_2(input_data):
-    pass
+    START_POS = 50
+
+    zero_count = 0
+    deltas = [utils.interpret_rotate(cmd) for cmd in input_data if cmd]
+    current = START_POS
+    #print("START PART 2")
+    #print(f"Current pos: {current}")
+    for delta in deltas:
+        current, pass_zero = utils.rotate(current, delta)
+        #print(f"Delta: {delta}, Current pos: {current}, Passed 0: {pass_zero}")
+        zero_count += pass_zero
+        if current == 0:
+            zero_count += 1
+
+    return zero_count
 
 
 def main(input_file):  # pragma: no cover

@@ -43,9 +43,10 @@ def test_rotate_left_positive():
     delta = -27
     expected_pos = 50 - 27
 
-    pos = rotate(start_pos, delta)
+    pos, pass_zero = rotate(start_pos, delta)
 
     assert pos == expected_pos
+    assert pass_zero == 0
 
 
 def test_rotate_right_positive():
@@ -53,9 +54,10 @@ def test_rotate_right_positive():
     delta = 18
     expected_pos = 50 + 18
 
-    pos = rotate(start_pos, delta)
+    pos, pass_zero = rotate(start_pos, delta)
 
     assert pos == expected_pos
+    assert pass_zero == 0
 
 
 def test_rotate_left_past_zero():
@@ -63,9 +65,10 @@ def test_rotate_left_past_zero():
     delta = -10
     expected_pos = 95 
 
-    pos = rotate(start_pos, delta)
+    pos, pass_zero = rotate(start_pos, delta)
 
     assert pos == expected_pos
+    assert pass_zero == 1
 
 
 def test_rotate_right_past_max():
@@ -73,9 +76,10 @@ def test_rotate_right_past_max():
     delta = 15
     expected_pos = 7
 
-    pos = rotate(start_pos, delta)
+    pos, pass_zero = rotate(start_pos, delta)
 
     assert pos == expected_pos
+    assert pass_zero == 1
 
 
 def test_rotate_left_multiple_rotations():
@@ -83,9 +87,10 @@ def test_rotate_left_multiple_rotations():
     delta = -110
     expected_pos = 95 
 
-    pos = rotate(start_pos, delta)
+    pos, pass_zero = rotate(start_pos, delta)
 
     assert pos == expected_pos
+    assert pass_zero == 2
 
 
 def test_rotate_right_multiple_rotations():
@@ -93,9 +98,59 @@ def test_rotate_right_multiple_rotations():
     delta = 115
     expected_pos = 7
 
-    pos = rotate(start_pos, delta)
+    pos, pass_zero = rotate(start_pos, delta)
 
     assert pos == expected_pos
+    assert pass_zero == 2
+
+
+def test_rotate_left_start_zero():
+    start_pos = 0
+    delta = -96
+    expected_pos = 4
+    expected_passes = 0
+
+    pos, pass_zero = rotate(start_pos, delta)
+
+    assert pos == expected_pos
+    assert pass_zero == expected_passes
+
+
+def test_rotate_left_multiple_start_zero():
+    start_pos = 0
+    delta = -196
+    expected_pos = 4
+    expected_passes = 1
+
+    pos, pass_zero = rotate(start_pos, delta)
+
+    assert pos == expected_pos
+    assert pass_zero == expected_passes
+
+
+def test_rotate_right_start_zero():
+    start_pos = 0
+    delta = 10
+    expected_pos = 10
+    expected_passes = 0
+
+    pos, pass_zero = rotate(start_pos, delta)
+
+    assert pos == expected_pos
+    assert pass_zero == expected_passes
+
+
+def test_rotate_right_multiple_start_zero():
+    start_pos = 0
+    delta = 110
+    expected_pos = 10
+    expected_passes = 1
+
+    pos, pass_zero = rotate(start_pos, delta)
+
+    assert pos == expected_pos
+    assert pass_zero == expected_passes
+
 
 def test_part_1_sample_input():
     input_data = [
@@ -114,3 +169,22 @@ def test_part_1_sample_input():
     zero_count = solve.part_1(input_data)
 
     assert zero_count == 3
+
+
+def test_part_2_sample_input():
+    input_data = [
+        "L68",
+        "L30",
+        "R48",
+        "L5",
+        "R60",
+        "L55",
+        "L1",
+        "L99",
+        "R14",
+        "L82",
+    ]
+
+    zero_count = solve.part_2(input_data)
+
+    assert zero_count == 6
