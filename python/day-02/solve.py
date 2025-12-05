@@ -2,11 +2,19 @@ import utils
 
 
 def get_input_data(filename):  # pragma: no cover
-    pass
+    with open(filename) as infile:
+        return [line.strip() for line in infile]
 
 
 def part_1(input_data):
-    pass
+    id_ranges = utils.get_ranges(input_data)
+
+    sum_invalid = 0
+    for id_range in id_ranges:
+        invalid_ids = utils.get_invalid(id_range)
+        sum_invalid += sum(invalid_ids)
+
+    return sum_invalid
 
 
 def part_2(input_data):
